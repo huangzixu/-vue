@@ -6,17 +6,22 @@
         <span @click="typeClick(index)" ref="changeType">{{val.right}}</span>
       </li>
     </ul>
+    <citychange></citychange>
     <section class="propy">
       <van-popup v-model="showType" overlay>
         <van-picker :columns="typeArray" show-toolbar title="服务样式" @cancel="cancelType" @confirm="confirmType" />
       </van-popup>
     </section>
-    <a href="javascript">常见问题</a>
+    <!-- <a href="javascript:;">常见问题</a> -->
   </div>
 </template>
 
 <script>
+import citychange from './citychange';
 export default {
+  components:{
+    citychange
+  },
   data() {
     return {
       showType:false,
@@ -29,48 +34,26 @@ export default {
           id: 0,
           info: "服务类型",
           right: "换驾照"
-        },
-        {
-          id: 1,
-          info: "当前驾照签发城市",
-          right: "请选择签发地"
-        },
-        {
-          id: 2,
-          info: "可补换的城市",
-          right: "请选择补换地"
-        },
-        {
-          id: 3,
-          info: "服务费",
-          right: "￥399"
-        },
-        {
-          id: 4,
-          info: "优惠",
-          right: "登录后查看"
         }
       ]
     };
   },
-
   methods:{
+      //点击更换驾照
       typeClick(index){
         index===0?this.showType=true:"";
-        index===1?console.log(11):""
       },
       cancelType(){
         this.showType=false
       },
       confirmType(value){
-        // this.form.type=value;
         this.$refs.changeType[0].innerHTML=value
         this.cancelType()
       }
   },
-  mounted(){
-    fetch("/api/ExchangeJiaZhao/getCostList?order_type=1&city_id=110100000000&province_id=110")
-  }
+  // mounted(){
+  //   fetch("/api/ExchangeJiaZhao/getCostList?order_type=1&city_id=110100000000&province_id=110")
+  // }
 };
 </script>
 
